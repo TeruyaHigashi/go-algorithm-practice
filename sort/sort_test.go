@@ -12,6 +12,10 @@ func TestInsertionSort(t *testing.T) {
 	sortingTest(InsertionSort, t)
 }
 
+func TestBubbleSort(t *testing.T) {
+	sortingTest(BubbleSort, t)
+}
+
 func sortingTest(sortingFunc func([]int) []int, t *testing.T) {
 
 	testData := createTestData()
