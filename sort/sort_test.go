@@ -20,6 +20,10 @@ func TestSelectionSort(t *testing.T) {
 	sortingTest(SelectionSort, t)
 }
 
+func TestShellSort(t *testing.T) {
+	sortingTest(ShellSort, t)
+}
+
 func sortingTest(sortingFunc func([]int) []int, t *testing.T) {
 
 	testData := createTestData()
