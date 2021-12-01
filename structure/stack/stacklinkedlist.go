@@ -10,11 +10,11 @@ type node struct {
 	next  *node
 }
 
-func (s *StackLinkedList) NewStackLinkedList(elems ...interface{}) *StackLinkedList {
-	if elems == nil {
-		return &StackLinkedList{}
-	}
+func NewStackLinkedList(elems ...interface{}) *StackLinkedList {
 	stack := StackLinkedList{}
+	if elems == nil {
+		return &stack
+	}
 	for _, elem := range elems {
 		stack.Push(elem)
 	}

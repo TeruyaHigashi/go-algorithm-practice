@@ -5,11 +5,12 @@ type StackSlice struct {
 	length int
 }
 
-func (s *StackSlice) NewStackSlice(elems ...interface{}) *StackSlice {
+func NewStackSlice(elems ...interface{}) *StackSlice {
+	stack := &StackSlice{}
 	for _, elem := range elems {
-		s.Push(elem)
+		stack.Push(elem)
 	}
-	return s
+	return stack
 }
 
 func (s *StackSlice) Push(elem interface{}) {
