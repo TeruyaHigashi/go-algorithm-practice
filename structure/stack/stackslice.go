@@ -19,6 +19,9 @@ func (s *StackSlice) Push(elem interface{}) {
 }
 
 func (s *StackSlice) Pop() interface{} {
+	if s.Length() == 0 {
+		return nil
+	}
 	poped := s.list[s.length-1]
 	s.list = s.list[:s.length-1]
 	s.length--
@@ -26,6 +29,9 @@ func (s *StackSlice) Pop() interface{} {
 }
 
 func (s *StackSlice) Peek() interface{} {
+	if s.Length() == 0 {
+		return nil
+	}
 	return s.list[s.length-1]
 }
 

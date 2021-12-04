@@ -11,26 +11,29 @@ type node struct {
 }
 
 func NewStackLinkedList(elems ...interface{}) *StackLinkedList {
-	stack := StackLinkedList{}
+	stack := &StackLinkedList{}
 	if elems == nil {
-		return &stack
+		return stack
 	}
 	for _, elem := range elems {
 		stack.Push(elem)
 	}
-	return &stack
+	return stack
 }
 
 func (s *StackLinkedList) Push(elem interface{}) {
-	pushed := node{value: &elem, next: nil}
+	pushed := &node{value: &elem, next: nil}
 	if s.length > 0 {
 		pushed.next = s.top
 	}
-	s.top = &pushed
+	s.top = pushed
 	s.length++
 }
 
 func (s *StackLinkedList) Pop() interface{} {
+	if s.Length() == 0 {
+		return nil
+	}
 	poped := *(s.top.value)
 	if s.Length() == 1 {
 		s.top = nil
@@ -42,6 +45,9 @@ func (s *StackLinkedList) Pop() interface{} {
 }
 
 func (s *StackLinkedList) Peek() interface{} {
+	if s.Length() == 0 {
+		return nil
+	}
 	return *(s.top.value)
 }
 

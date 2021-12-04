@@ -6,96 +6,113 @@ import (
 
 func TestStackSlice(t *testing.T) {
 
-	stack := &StackSlice{}
-	lengthTest(stack, 0, t)
+	sut := &StackSlice{}
+	lengthTest(sut, 0, t)
 
-	stack = &StackSlice{}
-	isEmptyTest(stack, true, t)
+	sut = &StackSlice{}
+	isEmptyTest(sut, true, t)
 
-	stack = &StackSlice{}
-	pushTest(stack, t)
+	sut = &StackSlice{}
+	peekTest(sut, nil, t)
 
-	stack = NewStackSlice("aaa", "bbb", 123)
-	lengthTest(stack, 3, t)
+	sut = &StackSlice{}
+	pushTest(sut, t)
 
-	stack = NewStackSlice("aaa", "bbb", 123)
-	isEmptyTest(stack, false, t)
+	sut = &StackSlice{}
+	popTest(sut, nil, t)
 
-	stack = NewStackSlice("aaa", "bbb", 123)
-	peekTest(stack, 123, t)
+	sut = NewStackSlice("aaa", "bbb", 123)
+	lengthTest(sut, 3, t)
 
-	stack = NewStackSlice("aaa", "bbb", 123)
-	popTest(stack, t)
+	sut = NewStackSlice("aaa", "bbb", 123)
+	isEmptyTest(sut, false, t)
 
-	stack = NewStackSlice("aaa", "bbb", 123)
-	pushTest(stack, t)
+	sut = NewStackSlice("aaa", "bbb", 123)
+	peekTest(sut, 123, t)
+
+	sut = NewStackSlice("aaa", "bbb", 123)
+	pushTest(sut, t)
+
+	sut = NewStackSlice("aaa", "bbb", 123)
+	popTest(sut, 123, t)
 }
 
 func TestStackLinkedList(t *testing.T) {
 
-	stack := &StackLinkedList{}
-	lengthTest(stack, 0, t)
+	sut := &StackLinkedList{}
+	lengthTest(sut, 0, t)
 
-	stack = &StackLinkedList{}
-	isEmptyTest(stack, true, t)
+	sut = &StackLinkedList{}
+	isEmptyTest(sut, true, t)
 
-	stack = &StackLinkedList{}
-	pushTest(stack, t)
+	sut = &StackLinkedList{}
+	peekTest(sut, nil, t)
 
-	stack = NewStackLinkedList("aaa", "bbb", 123)
-	lengthTest(stack, 3, t)
+	sut = &StackLinkedList{}
+	pushTest(sut, t)
 
-	stack = NewStackLinkedList("aaa", "bbb", 123)
-	isEmptyTest(stack, false, t)
+	sut = &StackLinkedList{}
+	popTest(sut, nil, t)
 
-	stack = NewStackLinkedList("aaa", "bbb", 123)
-	peekTest(stack, 123, t)
+	sut = NewStackLinkedList("aaa", "bbb", 123)
+	lengthTest(sut, 3, t)
 
-	stack = NewStackLinkedList("aaa", "bbb", 123)
-	popTest(stack, t)
+	sut = NewStackLinkedList("aaa", "bbb", 123)
+	isEmptyTest(sut, false, t)
 
-	stack = NewStackLinkedList("aaa", "bbb", 123)
-	pushTest(stack, t)
+	sut = NewStackLinkedList("aaa", "bbb", 123)
+	peekTest(sut, 123, t)
+
+	sut = NewStackLinkedList("aaa", "bbb", 123)
+	pushTest(sut, t)
+
+	sut = NewStackLinkedList("aaa", "bbb", 123)
+	popTest(sut, 123, t)
 }
 
-func lengthTest(stack Stack, expected int, t *testing.T) {
-	if stack.Length() != expected {
+func lengthTest(sut Stack, expected int, t *testing.T) {
+	if sut.Length() != expected {
 		t.Errorf("Lengthが期待値と相違")
 	}
 }
 
-func isEmptyTest(stack Stack, expected bool, t *testing.T) {
-	if stack.IsEmpty() != expected {
+func isEmptyTest(sut Stack, expected bool, t *testing.T) {
+	if sut.IsEmpty() != expected {
 		t.Errorf("IsEmptyが期待値と相違")
 	}
 }
 
-func peekTest(stack Stack, expected interface{}, t *testing.T) {
-	if stack.Peek() != expected {
+func peekTest(sut Stack, expected interface{}, t *testing.T) {
+	if sut.Peek() != expected {
 		t.Errorf("Peekが期待値と相違")
 	}
 }
 
-func pushTest(stack Stack, t *testing.T) {
+func pushTest(sut Stack, t *testing.T) {
 
-	expectedLength := stack.Length() + 1
-	stack.Push(1)
+	expectedLength := sut.Length() + 1
+	sut.Push(1)
 
-	if stack.Length() != expectedLength {
+	if sut.Length() != expectedLength {
 		t.Errorf("Push後のlengthが期待値と相違")
 	}
-	if stack.Peek() != 1 {
+	if sut.Peek() != 1 {
 		t.Errorf("Push後のtopが期待値と相違")
 	}
 }
 
-func popTest(stack Stack, t *testing.T) {
+func popTest(sut Stack, expectedPoped interface{}, t *testing.T) {
 
-	expectedLength := stack.Length() - 1
-	expectedPoped := stack.Peek()
-	actual := stack.Pop()
+	var expectedLength int
+	if sut.Length() == 0 {
+		expectedLength = 0
+	} else {
+		expectedLength = sut.Length() - 1
+	}
 
-	if stack.Length() != expectedLength {
+	actual := sut.Pop()
+
+	if sut.Length() != expectedLength {
 		t.Errorf("Pop後のlengthが期待値と相違")
 	}
 	if actual != expectedPoped {
