@@ -1,70 +1,67 @@
 package linkedlist
 
 type SinglyLinkedList struct {
-	head     *node
-	sentinel *node
-	length   int
+	first  *node
+	length int
 }
 
 func NewSinglyLinkedList(elems ...interface{}) *SinglyLinkedList {
 	sentinel := &node{}
-	sll := &SinglyLinkedList{head: sentinel, sentinel: sentinel, length: 0}
+	sll := &SinglyLinkedList{first: sentinel, length: 0}
 	for _, elem := range elems {
-		sll.AddLast(elem)
+		sll.AddEnd(elem)
 	}
 	return sll
 }
 
-func (sll *SinglyLinkedList) AddFirst(elem interface{}) {
-	added := &node{value: &elem, next: nil}
-	sll.length++
-	if sll.head != sll.sentinel {
-		added.next = sll.head
-	} else {
-		added.next = sll.sentinel
+func (sll *SinglyLinkedList) AddBegin(elem interface{}) {
+	added := &node{value: elem, next: nil}
+	if sll.first != nil {
+		added.next = sll.first
 	}
-	sll.head = added
+	sll.first = added
+	sll.length++
 }
 
-func (sll *SinglyLinkedList) AddLast(elem interface{}) {
-	added := &node{value: &elem, next: sll.sentinel}
-	sll.length++
-	if sll.head == sll.sentinel {
-		sll.head = added
+func (sll *SinglyLinkedList) AddEnd(elem interface{}) {
+	if sll.first == nil {
+		sll.AddBegin(elem)
 		return
 	}
-	iter := sll.head
-	for iter.next != sll.sentinel {
+	added := &node{value: &elem, next: nil}
+	iter := sll.first
+	for iter.next != nil {
 		iter = iter.next
 	}
 	iter.next = added
+	sll.length++
 }
 
-func (sll *SinglyLinkedList) RemoveFirst() interface{} {
-	if sll.Length() == 0 {
+func (sll *SinglyLinkedList) RemoveBegin() interface{} {
+	if sll.first == nil {
 		return nil
 	}
-	sll.length--
-	removed := sll.head
-	sll.head = removed.next
+	removed := sll.first
+	sll.first = removed.next
 	removed.next = nil
+	sll.length--
 	return removed.value
 }
 
-func (sll *SinglyLinkedList) RemoveLast() interface{} {
-	if sll.Length() == 0 {
+func (sll *SinglyLinkedList) RemoveEnd() interface{} {
+	if sll.first == nil {
 		return nil
-	} else if sll.Length() == 1 {
-		return sll.RemoveFirst()
+	} else if sll.first.next == nil {
+		return sll.RemoveBegin()
 	}
-	sll.length--
-	iter := sll.head
-	for iter.next.next != sll.sentinel {
+	iter := sll.first
+	for iter.next.next != nil {
 		iter = iter.next
 	}
 	removed := iter.next
 	removed.next = nil
-	iter.next = sll.sentinel
+	iter.next = nil
+	sll.length--
 	return removed.value
 }
 

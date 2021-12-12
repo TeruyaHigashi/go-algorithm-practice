@@ -7,7 +7,7 @@ type QueueLinkedList struct {
 }
 
 type node struct {
-	value *interface{}
+	value interface{}
 	next  *node
 }
 
@@ -23,7 +23,7 @@ func NewQueueLinkedList(elems ...interface{}) *QueueLinkedList {
 }
 
 func (q *QueueLinkedList) Enqueue(elem interface{}) {
-	enqueued := &node{value: &elem, next: nil}
+	enqueued := &node{value: elem, next: nil}
 	if q.length == 0 {
 		q.head = enqueued
 	} else {
@@ -37,7 +37,7 @@ func (q *QueueLinkedList) Dequeue() interface{} {
 	if q.Length() == 0 {
 		return nil
 	}
-	dequeued := *(q.head.value)
+	dequeued := q.head.value
 	if q.Length() == 1 {
 		q.head = nil
 		q.tail = nil

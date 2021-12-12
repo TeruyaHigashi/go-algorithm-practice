@@ -6,7 +6,7 @@ type StackLinkedList struct {
 }
 
 type node struct {
-	value *interface{}
+	value interface{}
 	next  *node
 }
 
@@ -22,7 +22,7 @@ func NewStackLinkedList(elems ...interface{}) *StackLinkedList {
 }
 
 func (s *StackLinkedList) Push(elem interface{}) {
-	pushed := &node{value: &elem, next: nil}
+	pushed := &node{value: elem, next: nil}
 	if s.length > 0 {
 		pushed.next = s.top
 	}
@@ -34,7 +34,7 @@ func (s *StackLinkedList) Pop() interface{} {
 	if s.Length() == 0 {
 		return nil
 	}
-	poped := *(s.top.value)
+	poped := s.top.value
 	if s.Length() == 1 {
 		s.top = nil
 	} else {
@@ -48,7 +48,7 @@ func (s *StackLinkedList) Peek() interface{} {
 	if s.Length() == 0 {
 		return nil
 	}
-	return *(s.top.value)
+	return s.top.value
 }
 
 func (s *StackLinkedList) Length() int {
