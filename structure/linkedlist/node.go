@@ -1,7 +1,7 @@
 package linkedlist
 
 type node struct {
-	value    *interface{}
+	value    interface{}
 	next     *node
 	previous *node
 }
