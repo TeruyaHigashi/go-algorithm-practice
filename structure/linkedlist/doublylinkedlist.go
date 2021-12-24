@@ -17,14 +17,16 @@ func NewDoublyLinkedList(elems ...interface{}) *DoublyLinkedList {
 func (dll *DoublyLinkedList) AddBegin(elem interface{}) {
 	added := &node{
 		value:    elem,
-		next:     dll.first,
+		next:     nil,
 		previous: nil,
 	}
-	dll.first.previous = added
-	dll.first = added
-	if dll.last == nil {
+	if dll.first == nil {
 		dll.last = added
+	} else {
+		dll.first.previous = added
+		added.next = dll.first
 	}
+	dll.first = added
 	dll.length++
 }
 
@@ -34,7 +36,7 @@ func (dll *DoublyLinkedList) AddEnd(elem interface{}) {
 		return
 	}
 	added := &node{
-		value:    &elem,
+		value:    elem,
 		next:     nil,
 		previous: dll.last,
 	}
@@ -48,8 +50,13 @@ func (dll *DoublyLinkedList) RemoveBegin() interface{} {
 		return nil
 	}
 	removed := dll.first
-	dll.first = dll.first.next
-	dll.first.previous = nil
+	if dll.first.next == nil {
+		dll.first = nil
+		dll.last = nil
+	} else {
+		dll.first = dll.first.next
+		dll.first.previous = nil
+	}
 	removed.next = nil
 	removed.previous = nil
 	dll.length--
@@ -59,6 +66,8 @@ func (dll *DoublyLinkedList) RemoveBegin() interface{} {
 func (dll *DoublyLinkedList) RemoveEnd() interface{} {
 	if dll.first == nil {
 		return nil
+	} else if dll.first.next == nil {
+		return dll.RemoveBegin()
 	}
 	removed := dll.last
 	dll.last = dll.last.previous

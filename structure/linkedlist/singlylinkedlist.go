@@ -6,8 +6,7 @@ type SinglyLinkedList struct {
 }
 
 func NewSinglyLinkedList(elems ...interface{}) *SinglyLinkedList {
-	sentinel := &node{}
-	sll := &SinglyLinkedList{first: sentinel, length: 0}
+	sll := &SinglyLinkedList{first: nil, length: 0}
 	for _, elem := range elems {
 		sll.AddEnd(elem)
 	}
@@ -28,7 +27,7 @@ func (sll *SinglyLinkedList) AddEnd(elem interface{}) {
 		sll.AddBegin(elem)
 		return
 	}
-	added := &node{value: &elem, next: nil}
+	added := &node{value: elem, next: nil}
 	iter := sll.first
 	for iter.next != nil {
 		iter = iter.next
